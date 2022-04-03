@@ -1,6 +1,7 @@
+import datetime
+
 import requests as requests
 from flask import Flask, render_template
-import datetime
 
 from post import Post
 
@@ -14,11 +15,10 @@ for post in posts:
     post_obj = Post(post['id'], post['title'], post['subtitle'], post['body'])
     post_objects.append(post_obj)
 
-
 @app.route("/")
 def home():
     current_year = datetime.datetime.now().year
-    return render_template("index.html", year=current_year)
+    return render_template("index.html", all_posts=post_objects, years=current_year)
 
 
 @app.route('/post/<int:index>')
