@@ -1,7 +1,7 @@
 import datetime
 
 import requests as requests
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from post import Post
 
@@ -36,9 +36,16 @@ def about_me():
     return render_template('about.html')
 
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact_me():
-    return render_template('contact.html')
+    if request.method == 'POST':
+        data = request.form
+        print(data['name'])
+        print(data['email'])
+        print(data['phone'])
+        print(data['message'])
+        return render_template('contact.html', msg_sent=True)
+    return render_template('contact.html', msg_sent=False)
 
 
 if __name__ == "__main__":
